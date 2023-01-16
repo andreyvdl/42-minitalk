@@ -2,7 +2,7 @@
 
 Program name | Files to turn in | External functions | Result
 :---: | :---: | :---: | :--:
-client, server	| *.c, *.h, Makefile| libft fucntions, write, signal, sigemptyset, sigaddset, sigaction, kill, getpid, malloc, free, pause, sleep, usleep, exit | 0/100%
+client, server	| *.c, *.h, Makefile| libft functions, write, signal, sigemptyset, sigaddset, sigaction, kill, getpid, malloc, free, pause, sleep, usleep, exit | 0/100%
 
 ## Objective
 
