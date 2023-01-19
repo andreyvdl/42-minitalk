@@ -2,6 +2,13 @@
 #include "libft/libft.h"
 #include "libft/ft_printf.h"
 
+void print_bit(int c) {
+    for (int i = 7; i >= 0; i--) {
+        ft_printf("%d", (c >> i) & 1);
+    }
+    ft_printf("\n");
+}
+
 void	received(int sig)
 {
 	if (sig == SIGUSR1)
@@ -16,34 +23,27 @@ void	send_bit(int srv_pid, int c)
 
 	signal(SIGUSR1, received);
 	signal(SIGUSR2, received);
-	if (c & i)
+	print_bit(c);
+	ft_printf("\n");
+	if ((c & 1) && i != 8)
 	{
+		ft_printf("ENTROU NO 1\n");
 		kill(srv_pid, SIGUSR1);
-		i <<= 1;
 	}
-	else
+	if (!(c & 1) && i != 8)
 	{
+		ft_printf("ENTROU NO 0\n");
 		kill(srv_pid, SIGUSR2);
-		i <<= 1;
 	}
-	if (i < 256)
+	if (i == 8)
 	{
-		// pause();
-		usleep(500);
-		send_bit(srv_pid, c);
-	}
-	else
-	{
-		i = 1;
+		ft_printf("I = 8: ");
+		print_bit(c);
 		return ;
 	}
-}
-
-void	print_bit(int div)
-{
-	if (div > 2)
-		print_bit(div / 2);
-	ft_printf("%d", div % 2);
+	c >>= 1;
+	i++;
+	send_bit(srv_pid, c);
 }
 
 void	validation(int ac, char **av)
@@ -78,8 +78,6 @@ int	main(int ac, char **av)
 	i = -1;
 	while (av[2][++i])
 	{
-		print_bit((int)av[2][i]);
-		ft_printf("\n%c\n", av[2][i]);
 		send_bit(srv_pid, (int)av[2][i]);
 	}
 }
