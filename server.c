@@ -1,29 +1,6 @@
 #include "minitalk.h"
 #include "libft/ft_printf.h"
 
-void print_bits(char c) {
-    for (int i = 7; i >= 0; i--) {
-        ft_printf("%d", (c >> i) & 1);
-    }
-    ft_printf("\n");
-}
-
-char	reverse_bits(char c)
-{
-    char	reversed;
-	int		i;
-
-	reversed = 0;
-	i = 0;
-	while (i < 8)
-	{
-        reversed = (reversed << 1) | (c & 1);
-        c >>= 1;
-		i++;
-    }
-	print_bits(reversed);
-    return (reversed);
-}
 void	which_signal(int sig, siginfo_t *siginfo, void *context)
 {
 	static char	letter = 0;
@@ -33,29 +10,19 @@ void	which_signal(int sig, siginfo_t *siginfo, void *context)
 	(void)siginfo;
 	if (sig == SIGUSR1)
 	{
-		ft_printf("1");
 		letter |= 1;
-		letter <<= 1;
-		bit++;
 		// kill(siginfo->si_pid, SIGUSR1);
 	}
-	else if (sig == SIGUSR2)
-	{
-		ft_printf("0");
-		letter <<= 1;
-		bit++;
+	//else if (sig == SIGUSR2)
 		// kill(siginfo->si_pid, SIGUSR2);
-	}
-	if (bit == 7)
+	bit++;
+	if (bit == 8)
 	{
-		ft_printf("\nLETTER:\n");
-		print_bits(letter);
-		ft_printf("\n\nREV BITS:\n");
-		reverse_bits(letter);
-		ft_printf("\n%c\n", letter);
+		ft_printf("%c", letter);
 		letter = 0;
 		bit = 0;
 	}
+	letter <<= 1;
 }
 
 

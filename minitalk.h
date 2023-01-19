@@ -6,7 +6,7 @@
 /*   By: adantas- <adantas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 15:27:14 by adantas-          #+#    #+#             */
-/*   Updated: 2023/01/18 13:30:33 by adantas-         ###   ########.fr       */
+/*   Updated: 2023/01/19 15:56:40 by adantas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 // client.c functions
 void	print_bit(int div);
-void	send_bit(int pid, int c);
+void	send_bit(int pid, char c);
 
 // server.c functions
 void	add_one(int sig);

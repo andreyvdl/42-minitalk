@@ -4,8 +4,10 @@ C_NAME = client
 CFLAGS = -Wall -Wextra -Werror -g3
 # ======= FILES =======
 S_FILES = server.c
+S_BONUS = server_bonus.c
 S_OBJS = $(S_FILES:%.c=%.o)
 C_FILES = client.c
+C_BONUS = client_bonus.c
 C_OBJS = $(C_FILES:%.c=%.o)
 # ======= COLORS ========
 BLACK = \033[1;30m
