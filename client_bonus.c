@@ -6,7 +6,7 @@
 /*   By: adantas- <adantas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 21:03:38 by adantas-          #+#    #+#             */
-/*   Updated: 2023/01/19 23:17:58 by adantas-         ###   ########.fr       */
+/*   Updated: 2023/01/20 16:00:41 by adantas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 void	received(int sig)
 {
 	if (sig == SIGUSR1)
-		ft_printf(".");
+		write(1, ".", 1);
 	else if (sig == SIGUSR2)
-		ft_printf("-");
+		write(1, "-", 1);
 }
 
 void	validation(int ac, char **av)
@@ -62,17 +62,16 @@ void	send_bit(int srv_pid, char c)
 		else if (!(((1 << 7) >> bit) & c))
 			kill(srv_pid, SIGUSR2);
 		pause();
-		usleep(100);
+		usleep(1543);
 		bit++;
 		if (bit == 8)
 		{
 			bit = 0;
+			write(1, " ", 1);
 			return ;
 		}
 	}
-	ft_printf(" ");
 }
-
 
 int	main(int ac, char **av)
 {

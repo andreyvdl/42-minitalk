@@ -58,8 +58,10 @@ fclean: clean
 	@echo "$(PURPLE)$(S_NAME) && $(C_NAME) removed.$(RESET)"
 
 re : fclean all
+	@echo "$(RED)Recompilation done.$(RESET)"
 
 re_bonus: fclean bonus
+	@echo "$(RED)Recompilation done.$(RESET)"
 
 norm:
 	@echo "$(YELLOW)Running norminette...$(RESET)"
