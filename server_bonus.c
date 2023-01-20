@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   server_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adantas- <adantas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/19 22:41:51 by adantas-          #+#    #+#             */
-/*   Updated: 2023/01/19 22:41:55 by adantas-         ###   ########.fr       */
+/*   Created: 2023/01/19 22:29:32 by adantas-          #+#    #+#             */
+/*   Updated: 2023/01/19 23:18:06 by adantas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "minitalk_bonus.h"
 #include "libft/ft_printf.h"
 
 void	which_signal(int sig, siginfo_t *siginfo, void *context)
 {
-	static char	letter = 0;
-	static int	bit = 0;
+	static unsigned char	letter = 0;
+	static int				bit = 0;
 
 	(void)context;
 	(void)siginfo;
+	usleep(100);
 	if (sig == SIGUSR1)
 		letter |= 1;
 	bit++;
@@ -30,6 +31,10 @@ void	which_signal(int sig, siginfo_t *siginfo, void *context)
 		bit = 0;
 	}
 	letter <<= 1;
+	if (sig == SIGUSR1)
+		kill(siginfo->si_pid, SIGUSR1);
+	else if (sig == SIGUSR2)
+		kill(siginfo->si_pid, SIGUSR2);
 }
 
 

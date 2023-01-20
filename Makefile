@@ -1,7 +1,7 @@
 # ======= VARIABLES =======
 S_NAME = server
 C_NAME = client
-CFLAGS = -Wall -Wextra -Werror -g3
+CFLAGS = -Wall -Wextra -Werror
 # ======= FILES =======
 S_FILES = server.c
 S_BONUS = server_bonus.c
@@ -22,12 +22,12 @@ RESET = \033[0m
 # ======= RULES =======
 
 all: lib
-	@make $(S_NAME)
-	@make $(C_NAME)
+	@make $(S_NAME) --no-print-directory
+	@make $(C_NAME) --no-print-directory
 
 $(C_NAME): $(C_OBJS)
 	@echo "$(GREEN)Compiling $(C_NAME)...$(RESET)"
-	@cc $(CFLAGS) $(C_OBJS) libft/libft.a -o $(C_NAME)
+	@cc $(CFLAGS) -I . $(C_OBJS) libft/libft.a -o $(C_NAME)
 	@echo "$(GREEN)$(C_NAME) created.$(RESET)"
 
 $(C_OBJS):
@@ -35,7 +35,7 @@ $(C_OBJS):
 
 $(S_NAME): $(S_OBJS)
 	@echo "$(GREEN)Compiling $(S_NAME)...$(RESET)"
-	@cc $(CFLAGS) $(S_OBJS) libft/libft.a -o $(S_NAME)
+	@cc $(CFLAGS) -I . $(S_OBJS) libft/libft.a -o $(S_NAME)
 	@echo "$(GREEN)$(S_NAME) created.$(RESET)"
 
 $(S_OBJS):
@@ -49,7 +49,7 @@ lib:
 
 clean:
 	@make clean -C libft/
-	@rm -rf $(C_OBJS) $(S_OBJS)
+	@rm -rf *.o
 	@echo "$(WHITE)Objects deleted.$(RESET)"
 
 fclean: clean
@@ -59,9 +59,11 @@ fclean: clean
 
 re : fclean all
 
+re_bonus: fclean bonus
+
 norm:
 	@echo "$(YELLOW)Running norminette...$(RESET)"
 	@norminette
 	@echo "$(YELLOW)All OK.$(RESET)"
 
-.PHONY: all clean fclean re norm lib 
+.PHONY: all clean fclean re norm lib re_bonus bonus

@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   minitalk_bonus.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adantas- <adantas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/16 15:27:14 by adantas-          #+#    #+#             */
-/*   Updated: 2023/01/19 22:43:25 by adantas-         ###   ########.fr       */
+/*   Created: 2023/01/19 22:44:47 by adantas-          #+#    #+#             */
+/*   Updated: 2023/01/19 22:47:05 by adantas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#ifndef MINITALK_BONUS_H
+# define MINITALK_BONUS_H
 
 # include <unistd.h>
 # include <signal.h>
@@ -23,6 +23,5 @@ void	send_bit(int srv_pid, char c);
 
 // server.c functions
 void	which_signal(int sig, siginfo_t *siginfo, void *context);
-
 
 #endif
