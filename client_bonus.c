@@ -6,7 +6,7 @@
 /*   By: adantas- <adantas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 21:03:38 by adantas-          #+#    #+#             */
-/*   Updated: 2023/01/20 16:00:41 by adantas-         ###   ########.fr       */
+/*   Updated: 2023/01/21 00:18:33 by adantas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,17 @@
 #include "libft/libft.h"
 #include "libft/ft_printf.h"
 
+static int	g_bit = 0;
+
 void	received(int sig)
 {
 	if (sig == SIGUSR1)
-		write(1, ".", 1);
-	else if (sig == SIGUSR2)
-		write(1, "-", 1);
+	{
+		g_bit++;
+		send_bit(0, 0);
+	}
+	else
+		g_bit = 8;
 }
 
 void	validation(int ac, char **av)
@@ -49,27 +54,23 @@ void	validation(int ac, char **av)
 
 void	send_bit(int srv_pid, char c)
 {
-	static int	bit = 0;
+	static int	pid = 0;
+	static char	letter = 0;
 
-	signal(SIGUSR1, received);
-	signal(SIGUSR2, received);
-	if (bit != 0)
-		bit = 0;
-	while (bit < 8)
+	if (srv_pid)
+		pid = srv_pid;
+	if (c)
+		letter = c;
+	if (g_bit != 0)
+		g_bit = 0;
+	while (g_bit < 8)
 	{
-		if (((1 << 7) >> bit) & c)
-			kill(srv_pid, SIGUSR1);
-		else if (!(((1 << 7) >> bit) & c))
-			kill(srv_pid, SIGUSR2);
+		if (((1 << 7) >> g_bit) & letter)
+			kill(pid, SIGUSR1);
+		else
+			kill(pid, SIGUSR2);
 		pause();
-		usleep(1543);
-		bit++;
-		if (bit == 8)
-		{
-			bit = 0;
-			write(1, " ", 1);
-			return ;
-		}
+		sleep(1);
 	}
 }
 
@@ -78,10 +79,15 @@ int	main(int ac, char **av)
 	size_t	i;
 	int		srv_pid;
 
+	signal(SIGUSR1, received);
+	signal(SIGUSR2, received);
 	validation(ac, av);
 	srv_pid = ft_atoi(av[1]);
 	i = -1;
 	while (av[2][++i])
+	{
 		send_bit(srv_pid, av[2][i]);
+		g_bit = 0;
+	}
 	send_bit(srv_pid, '\n');
 }

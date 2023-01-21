@@ -1,7 +1,7 @@
 # ======= VARIABLES =======
 S_NAME = server
 C_NAME = client
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g3
 # ======= FILES =======
 S_FILES = server.c
 S_BONUS = server_bonus.c
