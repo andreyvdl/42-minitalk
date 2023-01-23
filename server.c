@@ -6,7 +6,7 @@
 /*   By: adantas- <adantas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 22:41:51 by adantas-          #+#    #+#             */
-/*   Updated: 2023/01/19 22:41:55 by adantas-         ###   ########.fr       */
+/*   Updated: 2023/01/23 15:57:15 by adantas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,25 @@
 
 void	which_signal(int sig, siginfo_t *siginfo, void *context)
 {
-	static char	letter = 0;
-	static int	bit = 0;
+	static unsigned char	letter = 0;
+	static int				bit = 0;
 
 	(void)context;
-	(void)siginfo;
 	if (sig == SIGUSR1)
 		letter |= 1;
 	bit++;
 	if (bit == 8)
 	{
-		ft_printf("%c", letter);
+		write(1, &letter, 1);
 		letter = 0;
 		bit = 0;
 	}
 	letter <<= 1;
+	if (sig == SIGUSR1)
+		kill(siginfo->si_pid, SIGUSR1);
+	else
+		kill(siginfo->si_pid, SIGUSR2);
 }
-
 
 int	main(void)
 {

@@ -6,13 +6,28 @@
 /*   By: adantas- <adantas-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 21:06:11 by adantas-          #+#    #+#             */
-/*   Updated: 2023/01/19 21:21:58 by adantas-         ###   ########.fr       */
+/*   Updated: 2023/01/23 16:18:19 by adantas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 #include "libft/libft.h"
 #include "libft/ft_printf.h"
+
+int	g_bit;
+
+void	received(int sig)
+{
+	if (sig == SIGUSR1)
+		g_bit++;
+	else if (sig == SIGUSR2)
+		g_bit++;
+	else
+	{
+		ft_printf("❗\tError: Signal is invalid.\n");
+		exit(22);
+	}
+}
 
 void	validation(int ac, char **av)
 {
@@ -41,36 +56,34 @@ void	validation(int ac, char **av)
 
 void	send_bit(int srv_pid, char c)
 {
-	static int	bit = 0;
-
-	if (bit != 0)
-		bit = 0;
-	while (bit < 8)
+	while (g_bit < 8)
 	{
-		if (((1 << 7) >> bit) & c)
+		if ((128 >> g_bit) & c)
 			kill(srv_pid, SIGUSR1);
-		else if (!(((1 << 7) >> bit) & c))
+		else
 			kill(srv_pid, SIGUSR2);
-		usleep(300);
-		bit++;
-		if (bit == 8)
+		usleep(5000);
+		if (g_bit == 8)
 		{
-			bit = 0;
+			g_bit = 0;
 			return ;
 		}
 	}
 }
-
 
 int	main(int ac, char **av)
 {
 	size_t	i;
 	int		srv_pid;
 
+	signal(SIGUSR1, received);
+	signal(SIGUSR2, received);
 	validation(ac, av);
 	srv_pid = ft_atoi(av[1]);
 	i = -1;
+	g_bit = 0;
 	while (av[2][++i])
 		send_bit(srv_pid, av[2][i]);
 	send_bit(srv_pid, '\n');
+	exit(0);
 }
