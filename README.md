@@ -1,5 +1,9 @@
-# 42-minitalk
+<div align="center">
+  <img src="https://github.com/gawbsouza/42-pdh/blob/main/dark/minitalk_dark.svg"><br>
+  <a href="https://github.com/gawbsouza/42-pdh"><img src="https://github.com/gawbsouza/42-pdh/blob/main/badge/42pdh_badge.svg"></a>
+</div>
 
+___
 Program name | Files to turn in | External functions | Result
 :---: | :---: | :---: | :--:
 client, server	| *.c, *.h, Makefile| libft functions, write, signal, sigemptyset, sigaddset, sigaction, kill, getpid, malloc, free, pause, sleep, usleep, exit | 125/100%
