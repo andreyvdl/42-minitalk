@@ -19,4 +19,38 @@ The client takes two parameters:
 > The client must send the string passed as a parameter to the server.
 Once the string has been received, the server must print it.
 
+## Execution
 
+```sh
+make
+```
+
+on terminal 1:
+
+```sh
+./server
+```
+
+on terminal 2:
+
+```sh
+./client server_pid string
+```
+
+OR
+
+```sh
+make bonus
+```
+
+on terminal 1:
+
+```sh
+./server
+```
+
+on terminal 2:
+
+```sh
+./client server_pid string
+```
