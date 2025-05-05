@@ -54,3 +54,7 @@ on terminal 2:
 ```sh
 ./client server_pid string
 ```
+
+## Demo
+
+https://github.com/user-attachments/assets/d65203f9-bc94-47bf-ab6b-d37b0c510d0a
